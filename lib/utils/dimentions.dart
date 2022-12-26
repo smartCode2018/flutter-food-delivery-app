@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+//Note dimension calculations are based on iphone 12 screensize
+//iphone 12 screen height = 844
+//iphone 12 screen width = 390
 class Dimentions {
   static double screenHeight = Get.context!.height;
   static double screenWidth = Get.context!.width;
@@ -30,4 +33,8 @@ class Dimentions {
 
 //icon size
   static double iconSize24 = screenHeight / 35.17;
+
+//list view size
+  static double listViewImgSize = screenWidth / 3.25;
+  static double listViewTextConSize = screenWidth / 3.9;
 }
