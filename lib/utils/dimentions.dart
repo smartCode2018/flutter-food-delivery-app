@@ -24,6 +24,7 @@ class Dimentions {
   static double width45 = screenHeight / 18.76;
 
 //font
+  static double font16 = screenHeight / 52.7;
   static double font20 = screenHeight / 42.2;
   static double font26 = screenHeight / 32.46;
 
@@ -44,5 +45,5 @@ class Dimentions {
   static double popularFoodImgSize = screenHeight / 2.41;
 
 // bottom height
-  static double bottomHeightBar = screenHeight / 703;
+  static double bottomHeightBar = screenHeight / 7.03;
 }
