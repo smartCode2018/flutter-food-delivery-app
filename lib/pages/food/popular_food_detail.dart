@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/popular_product_controller.dart';
+import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/routes/route_helper.dart';
+import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimentions.dart';
 import 'package:food_delivery/widgets/app_column.dart';
@@ -7,12 +11,17 @@ import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/expandable_text.dart';
 import 'package:food_delivery/widgets/icon_and_text.dart';
 import 'package:food_delivery/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+  const PopularFoodDetail({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+    //print("product name is " + product.name.toString());
     return Scaffold(
       //backgroundColor: Colors.white,
       body: Stack(
@@ -27,7 +36,9 @@ class PopularFoodDetail extends StatelessWidget {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("assets/image/food0.png"))))),
+                          image: NetworkImage(AppConstants.BASE_URL +
+                              AppConstants.UPLOAD_URL +
+                              product.img!))))),
           //icon widgets
           Positioned(
               top: Dimentions.height45,
@@ -36,9 +47,14 @@ class PopularFoodDetail extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppIcon(
-                      icon: Icons.arrow_back_ios,
-                      iconSize: Dimentions.iconSize16,
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getInitial());
+                      },
+                      child: AppIcon(
+                        icon: Icons.arrow_back_ios,
+                        iconSize: Dimentions.iconSize16,
+                      ),
                     ),
                     AppIcon(
                         icon: Icons.shopping_cart_outlined,
@@ -65,7 +81,7 @@ class PopularFoodDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppColumn(
-                        text: "Chinese Side",
+                        text: product.name,
                       ),
                       SizedBox(
                         height: Dimentions.height20,
@@ -76,9 +92,7 @@ class PopularFoodDetail extends StatelessWidget {
                       ),
                       Expanded(
                         child: SingleChildScrollView(
-                          child: ExpandableText(
-                              text:
-                                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."),
+                          child: ExpandableText(text: product.description),
                         ),
                       ),
                     ],
@@ -144,7 +158,7 @@ class PopularFoodDetail extends StatelessWidget {
                 color: AppColors.mainColor,
               ),
               child: BigText(
-                text: "\$10|Add to cart",
+                text: "\$ ${product.price!} | Add to cart",
                 color: Colors.white,
               ),
             ),
